@@ -19,7 +19,7 @@ public class WorldController : MonoBehaviour {
 
 	void Update() {
 		// Show ceiling mode when tilde is clicked
-		if (Input.GetKeyDown (KeyCode.BackQuote)) {
+		if (Input.GetKeyDown (KeyCode.F1)) {
 			if (levelMesh.GetComponent<Renderer>().enabled) {
 				levelMesh.GetComponent<Renderer>().enabled = false;
 				levelMeshTopless.GetComponent<Renderer>().enabled = true;

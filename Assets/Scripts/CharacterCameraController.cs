@@ -11,10 +11,14 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Camera))]
 public class CharacterCameraController : MonoBehaviour {
 
 	public PlayerController player;
 	public Transform[] pivots;
+	public float zoomFactor = 1f;
+	public float zoomMax = 10f;
+	public float zoomMin = 0f;
 	private int _currentPivot;
 
 	void Start() {
@@ -45,6 +49,23 @@ public class CharacterCameraController : MonoBehaviour {
 		if (this.transform.position != pivots[_currentPivot].position) {
 			this.transform.position = pivots[_currentPivot].position;
 			this.transform.rotation = pivots[_currentPivot].rotation;
+		}
+
+		// Allow for zoom using the scrollwheel
+		// Optionally use the '.' and ',' because the axis control is fucked up.
+		float mouseWheel = Input.GetAxis ("Mouse ScrollWheel");
+		Camera camComponent = GetComponent<Camera> ();
+		if (mouseWheel > 0f || Input.GetKey(KeyCode.Comma)) {
+			if (camComponent.orthographicSize >= zoomMax) {
+				camComponent.orthographicSize = zoomMax;
+			} else
+				camComponent.orthographicSize += zoomFactor;
+		} 
+		else if (mouseWheel < 0f || Input.GetKey(KeyCode.Period)) {
+			if (camComponent.orthographicSize <= zoomMin) {
+				camComponent.orthographicSize = zoomMin;
+			} else
+				camComponent.orthographicSize -= zoomFactor;
 		}
 	}
 }
