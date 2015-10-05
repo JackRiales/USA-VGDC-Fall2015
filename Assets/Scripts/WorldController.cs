@@ -13,8 +13,20 @@ using System.Collections;
 
 public class WorldController : MonoBehaviour {
 
-	public GameObject[] levels;
+	public GameObject	levelMesh;
+	public GameObject	levelMeshTopless;
 	public Light		globalLight;
 
-
+	void Update() {
+		// Show ceiling mode when tilde is clicked
+		if (Input.GetKeyDown (KeyCode.BackQuote)) {
+			if (levelMesh.GetComponent<Renderer>().enabled) {
+				levelMesh.GetComponent<Renderer>().enabled = false;
+				levelMeshTopless.GetComponent<Renderer>().enabled = true;
+			} else {
+				levelMeshTopless.GetComponent<Renderer>().enabled = false;
+				levelMesh.GetComponent<Renderer>().enabled = true;
+			}
+		}
+	}
 }
